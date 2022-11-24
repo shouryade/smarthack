@@ -1,0 +1,40 @@
+
+name: Deploy On Server
+
+on:
+  push:
+    tags:
+      - v*.*.*
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@master
+
+    - name: Set up Node.js
+      uses: actions/setup-node@master
+      with:
+        node-version: 16.17.0
+
+    
+    - name: Install dependencies
+      run: npm install
+      
+    - name: Build
+      run: npm run build
+      env:
+        CI: false
+  
+    - name: SCP files via ssh key
+      uses: appleboy/scp-action@master
+      env:
+          USERNAME: ${{ secrets.USERNAME }}
+          HOST: ${{ secrets.HOST }}
+          KEY: ${{ secrets.SSHKEY }}
+      with:
+          source: './build/'
+          target: '/home/shourya/hosted-projects/astellar2022' 
