@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button, Container, Row } from "react-bootstrap";
 import "./login.css";
 import FormInput from "./FormInput";
@@ -8,145 +9,36 @@ import "react-toastify/dist/ReactToastify.css";
 
 export default function Register() {
   const [values, setValues] = useState({
-    teamname: "",
-    email: "",
-    u1: "",
-    b1: "",
-    b2: "",
-    b3: "",
-    d1: "",
-    d2: "",
-    d3: "",
-    u2: "",
-    u3: "",
-    email1: "",
-    email2: "",
+    username: "",
+    companyname: "",
     password: "",
   });
 
   const inputs = [
     {
       id: 1,
-      name: "teamname",
+      name: "username",
       type: "text",
       required: true,
       autocomplete:"off",
-      pattern: "^[A-Za-z0-9]{3,16}$",
+      pattern: "^[A-Za-z0-9]{3,50}$",
       errorMessage:
-        "Teamname should be 3-16 characters and shouldn't include any special character or space!",
-      placeholder: "Teamname",
-      label: "Enter Teamname",
+        "Username should be 3-50 characters!",
+      placeholder: "Username",
+      label: "Enter your Username",
     },
     {
       id: 2,
-      name: "email",
-      type: "email",
+      name: "companyname",
+      type: "text",
       autocomplete:"off",
       required: true,
-      errorMessage: "Please enter a valid email address!",
-      placeholder: "someone@domain.com",
-      label: "E-mail ID of Team Leader",
+      errorMessage: "Company name is compulsory!",
+      placeholder: "Company Name",
+      label: "Enter Company Name",
     },
     {
       id: 3,
-      name: "u1",
-      type: "text",
-      autocomplete:"off",
-      required: true,
-      errorMessage: "Leader Name can't be empty",
-      placeholder: "Leader name",
-      label: "Name of Leader",
-    },
-    {
-      id: 4,
-      name: "d1",
-      type: "text",
-      autocomplete:"off",
-      required: true,
-      errorMessage: "Department can't be empty",
-      placeholder: "CSE",
-      label: "Department",
-    },
-    {
-      id: 5,
-      name: "b1",
-      type: "number",
-      autocomplete:"off",
-      required: true,
-      errorMessage: "Year of Graduation can't be empty!",
-      placeholder: "2025",
-      label: "Year of Graduation",
-    },
-    {
-      id: 6,
-      name: "u2",
-      autocomplete:"off",
-      type: "text",
-      errorMessage: "",
-      placeholder: "Team Player 1",
-      label: "Name of Player 1",
-    },
-    {
-      id: 7,
-      name: "email1",
-      type: "email",
-      autocomplete:"off",
-      errorMessage: "Please enter a valid email address!",
-      placeholder: "someone@domain.com",
-      label: "E-mail ID of Player 1",
-    },
-    {
-      id: 8,
-      name: "d2",
-      type: "text",
-      autocomplete:"off",
-      placeholder: "CSE",
-      label: "Department",
-    },
-    {
-      id: 9,
-      name: "b2",
-      type: "number",
-      autocomplete:"off",
-      placeholder: "2025",
-      label: "Year of Graduation",
-    },
-    {
-      id: 10,
-      name: "u3",
-      type: "text",
-      autocomplete:"off",
-      errorMessage: "",
-      placeholder: "Team Player 2",
-      label: "Name of Player 2",
-    },
-    {
-      id: 11,
-      name: "email2",
-      type: "email",
-      autocomplete:"off",
-      errorMessage: "Please enter a valid email address!",
-      placeholder: "someone@domain.com",
-      label: "E-mail ID of the Player 2",
-    },
-    {
-      id: 12,
-      name: "d3",
-      type: "text",
-      autocomplete:"off",
-      placeholder: "CSE",
-      label: "Department",
-    },
-    {
-      id: 13,
-      name: "b3",
-      type: "number",
-      autocomplete:"off",
-      placeholder: "2025",
-      label: "Year of Graduation",
-    },
-    {
-      id: 14,
       name: "password",
       type: "password",
       required: true,
@@ -166,19 +58,8 @@ export default function Register() {
 
     axios
       .post("/api/user/signup/", {
-        teamname: myObj.teamname,
-        u1: myObj.u1,
-        u3: myObj.u3,
-        u2: myObj.u2,
-        d1: myObj.d1,
-        d2: myObj.d2,
-        d3: myObj.d3,
-        b1: myObj.b1,
-        b2: myObj.b2,
-        b3: myObj.b3,
-        email1: myObj.email1,
-        email2: myObj.email2,
-        email: myObj.email,
+        username: myObj.username,
+        companyname: myObj.companyname,
         password: myObj.password,
       })
       .then((result) => {
@@ -191,6 +72,7 @@ export default function Register() {
           draggable: true,
           progress: undefined,
         });
+        // useNavigate('/dashboard');
       })
       .catch((err) => {
         var msg = "";
