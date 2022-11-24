@@ -6,6 +6,15 @@ name = "pypi"
 [packages]
 fastapi = {extras = ["all"], version = "*"}
 bleach = "*"
+pymongo = {extras = ["srv"], version = "*"}
+opencv-python = "*"
+numpy = "*"
+pillow = "*"
+python-jose = "*"
+passlib = "*"
+cryptography = "*"
+openpyxl = "*"
+python-dotenv = "*"
 
 [dev-packages]
 
