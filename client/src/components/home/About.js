@@ -1,7 +1,7 @@
 import React from "react";
 import { Container, Row } from "react-bootstrap";
 
-function Timeline1() {
+function About() {
   return (
     <Container fluid className="home-about-section" id="about">
       <Container>
@@ -30,4 +30,4 @@ function Timeline1() {
     </Container>
   );
 }
-export default Timeline1;
+export default About;

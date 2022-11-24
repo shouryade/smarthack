@@ -1,7 +1,7 @@
 import React from "react";
 import { Container, Row } from "react-bootstrap";
 
-function Prizes() {
+function Pricing() {
   return (
     <>
       <Container fluid className="sponsor-section" id="about">
@@ -20,8 +20,7 @@ function Prizes() {
           <div className="card-deck" style={{
             display: "grid",
             gridTemplateColumns: "1fr 1fr 1fr",
-            gap: "2rem"
-
+            gap: "2rem",
           }}>
             <div className="card">
               <div className="card-body">
@@ -56,4 +55,4 @@ function Prizes() {
     </>
   );
 }
-export default Prizes;
+export default Pricing;
