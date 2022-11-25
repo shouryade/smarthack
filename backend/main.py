@@ -22,17 +22,17 @@ client = MongoClient(MONGODB_CONNECTION_URI)
 db = client["predico"]
 part_form = db["users"]
 
-# origins = [
-#     "http://localhost:3000",
-#     "http://localhost:8080",
-# ]
-# app.add_middleware(
-#     CORSMiddleware,
-#     allow_origins="*",
-#     allow_credentials=True,
-#     allow_methods=["*"],
-#     allow_headers=["*"],
-# )
+origins = [
+    "http://localhost:3000",
+    "http://localhost:8080",
+]
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins="*",
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 from pymongo import MongoClient
 
@@ -63,7 +63,7 @@ async def read_root():
     return {"data": "Hello OWrld"}
 
 
-@app.post("/register")
+@app.post("/api/user/signup")
 def create_user(request: User):
 
     if bool((part_form.find_one({"username": request.username}))):
@@ -83,19 +83,23 @@ def create_user(request: User):
         return {"res": "created", "id": str(_id.inserted_id)}
 
 
-@app.post("/login")
-def login(request: OAuth2PasswordRequestForm = Depends()):
+@app.post("/api/user/signin")
+def login(request: Login):
+
     user = part_form.find_one({"username": request.username})
+    print(user)
     if not user:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail=f"No user found with this {request.username} username",
         )
     if not Hash.verify(user["password"], request.password):
+
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, detail=f"Wrong Username or password"
         )
     access_token = create_access_token(data={"sub": user["username"]})
+
     return {"access_token": access_token, "token_type": "bearer"}
 
 

@@ -1,16 +1,16 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { Button, Container, Row } from "react-bootstrap";
 import "./login.css";
 import FormInput from "./FormInput";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useNavigate } from "react-router-dom";
 
-export default function Register() {
+export default function Login() {
+  const navigate = useNavigate();
   const [values, setValues] = useState({
-    username: "",
-    companyname: "",
+    teamname: "",
     password: "",
   });
 
@@ -21,27 +21,18 @@ export default function Register() {
       type: "text",
       required: true,
       autocomplete: "off",
-      pattern: "^[A-Za-z0-9]{3,50}$",
-      errorMessage: "Username should be 3-50 characters!",
-      placeholder: "Username",
-      label: "Enter your Username",
+      pattern: "^[A-Za-z0-9]{3,16}$",
+      errorMessage:
+        "Username should be 3-16 characters and shouldn't include any special character!",
+      placeholder: "username",
+      label: "Enter Username",
     },
     {
       id: 2,
-      name: "companyname",
-      type: "text",
-      autocomplete: "off",
-      required: true,
-      errorMessage: "Company name is compulsory!",
-      placeholder: "Company Name",
-      label: "Enter Company Name",
-    },
-    {
-      id: 3,
       name: "password",
       type: "password",
-      required: true,
       autocomplete: "off",
+      required: true,
       errorMessage:
         "Password should be atleast 6-16 characters and must include atleast 1 letter, 1 number and 1 special character ",
       placeholder: "Password",
@@ -54,15 +45,13 @@ export default function Register() {
     const data = new FormData(e.target);
     const payload = JSON.stringify(Object.fromEntries(data.entries()));
     const myObj = JSON.parse(payload);
-
     axios
-      .post("http://localhost:1339/api/user/signup/", {
+      .post("http://localhost:1339/api/user/signin/", {
         username: myObj.username,
-        company: myObj.companyname,
         password: myObj.password,
       })
       .then((result) => {
-        toast.success(" Successful registration!", {
+        toast.success(" Successful Login!", {
           position: "top-center",
           autoClose: 5000,
           hideProgressBar: false,
@@ -71,12 +60,16 @@ export default function Register() {
           draggable: true,
           progress: undefined,
         });
-        // useNavigate('/dashboard');
+        //setting token to localstorage
+        // setAuthToken(result.data.token);
+        // console.log(result);
+        localStorage.setItem("jwt", result.data.access_token);
+        navigate("/profile");
       })
       .catch((err) => {
         var msg = "";
         if (typeof err.response == "undefined") {
-          msg = "Server error, please try later!";
+          msg = "Server error, please try again!";
         } else {
           msg = err.response.data.errors[0].msg;
         }
@@ -109,7 +102,7 @@ export default function Register() {
               paddingTop: "7rem",
             }}
           >
-            <span className="purple"> REGISTER </span>
+            <span className="purple"> LOGIN </span>
           </h1>
           <Row>
             <div className="form-gallery">
@@ -150,7 +143,7 @@ export default function Register() {
                     align: "center",
                   }}
                 >
-                  Register !
+                  Login !
                 </Button>{" "}
               </form>
             </div>

@@ -11,7 +11,7 @@ const Profile = () => {
   const [loading, setLoading] = React.useState(false);
 
   const populateProfile = useCallback(async () => {
-    const res = await axios.get("/api/user/getDetails", {
+    const res = await axios.get("http://localhost:1339/api/user/getDetails", {
       headers: {
         "astellar-headers": localStorage.getItem("jwt"),
       },
@@ -70,7 +70,7 @@ const Profile = () => {
             paddingBottom: "3rem",
           }}
         >
-          <span className="purple"> TEAM {data.teamName} </span>
+          <span className="purple"> COMPANY {data.teamName} </span>
         </h1>
         <Row>
           <div>
@@ -99,7 +99,7 @@ const Profile = () => {
               <span style={{ padding: "2rem 0 2rem 0" }}>
                 <span className="purple" style={{ fontSize: "1.1rem" }}>
                   {" "}
-                  LEADER NAME :{" "}
+                  Username :{" "}
                 </span>
                 <span
                   style={{
@@ -115,7 +115,7 @@ const Profile = () => {
               <span style={{ padding: "2rem 0 2rem 0" }}>
                 <span className="purple" style={{ fontSize: "1.1rem" }}>
                   {" "}
-                  CURRENT LEVEL :{" "}
+                  Tier :{" "}
                 </span>
                 <span
                   style={{

@@ -77,7 +77,15 @@ function NavBar() {
                 Contact
               </Nav.Link>
             </Nav.Item>
-            
+            <Nav.Item>
+              <Nav.Link
+                as={Link}
+                to="/login"
+                onClick={() => updateExpanded(false)}
+              >
+                Login
+              </Nav.Link>
+            </Nav.Item>
             <Nav.Item>
               <Nav.Link
                 as={Link}

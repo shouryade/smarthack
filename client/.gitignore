@@ -6,7 +6,7 @@
 .pnp.js
 
 src/components/home/Home1.js
-src/components/auth/Login.js
+# src/components/auth/Login.js
 
 # testing
 /coverage
