@@ -1,6 +1,6 @@
 **.env
 **.vscode
-
+**__pycache__
 client/node_modules
 /.pnp
 .pnp.js
