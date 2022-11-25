@@ -60,11 +60,8 @@ export default function Login() {
           draggable: true,
           progress: undefined,
         });
-        //setting token to localstorage
-        // setAuthToken(result.data.token);
-        // console.log(result);
         localStorage.setItem("jwt", result.data.access_token);
-        navigate("/profile");
+        navigate("/dashboard");
       })
       .catch((err) => {
         var msg = "";

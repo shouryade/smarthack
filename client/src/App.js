@@ -17,10 +17,10 @@ import "./style.css";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Login from "./components/auth/Login";
-import Profile from "./components/Profile";
-// import Admin from "./components/Admin";
-import Leaderboard from "./components/Leaderboard";
+import Dashboard from "./components/Dashboard";
+
 import Footer from "./components/home/Footer";
+// import Dashboard from "./components/Dashboard";
 
 function App() {
   const [load, upadateLoad] = useState(true);
@@ -45,9 +45,9 @@ function App() {
 
           {/* <Route path="/about" element={<About />} /> */}
           <Route path="/register" element={<Register />} />
-          <Route path="/leaderboard" element={<Leaderboard />} />
+
           <Route path="/login" element={<Login />} />
-          <Route path="/profile" element={<Profile />} />
+          <Route path="/dashboard" element={<Dashboard />} />
 
           {/* <Route path="/play" element={<Playc />} /> */}
 

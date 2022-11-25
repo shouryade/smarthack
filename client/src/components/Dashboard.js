@@ -9,10 +9,13 @@ import {
   CategoryScale,
   LinearScale,
   BarElement,
+  PointElement,
+  LineElement,
   Title,
   Tooltip,
   Legend,
 } from "chart.js";
+import { Line } from "react-chartjs-2";
 import { Bar } from "react-chartjs-2";
 import { faker } from "@faker-js/faker";
 
@@ -20,12 +23,14 @@ ChartJS.register(
   CategoryScale,
   LinearScale,
   BarElement,
+  PointElement,
+  LineElement,
   Title,
   Tooltip,
   Legend
 );
 
-const Profile = () => {
+const Dashboard = () => {
   const navigate = useNavigate();
   // const [data, setData] = React.useState({});
   const [loading, setLoading] = React.useState(false);
@@ -84,19 +89,15 @@ const Profile = () => {
         position: "top",
       },
       title: {
-        display: true,
+        display: false,
         text: "Chart.js Bar Chart",
       },
     },
   };
   const labels = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
+    1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21,
+    22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40,
+    41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52,
   ];
 
   const interdata = {
@@ -107,16 +108,42 @@ const Profile = () => {
         data: labels.map(() => faker.datatype.number({ min: 0, max: 1000 })),
         backgroundColor: "rgba(255, 99, 132, 0.5)",
       },
+      // {
+      //   label: "Dataset 2",
+      //   data: labels.map(() => faker.datatype.number({ min: 0, max: 1000 })),
+      //   backgroundColor: "rgba(53, 162, 235, 0.5)",
+      // },
+    ],
+  };
+  const options1 = {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: "top",
+      },
+      title: {
+        display: false,
+        text: "Chart.js Line Chart",
+      },
+    },
+  };
+
+  const data1 = {
+    labels,
+    datasets: [
       {
-        label: "Dataset 2",
-        data: labels.map(() => faker.datatype.number({ min: 0, max: 1000 })),
+        label: "Line Chart",
+        data: labels.map(() =>
+          faker.datatype.number({ min: -1000, max: 1000 })
+        ),
+        borderColor: "rgb(53, 162, 235)",
         backgroundColor: "rgba(53, 162, 235, 0.5)",
       },
     ],
   };
 
   if (loading && !data) return <h2>loading</h2>;
-  // return <h1>{JSON.stringify(data)}</h1>;
+
   return (
     <Container fluid className="sponsor-section" id="about">
       <Container>
@@ -143,51 +170,44 @@ const Profile = () => {
             >
               <span className="purple" style={{ marginBottom: "11rem" }}>
                 {" "}
-                PROFILE{" "}
+                DASHBOARD{" "}
               </span>
             </h1>
             <div
-              className="gallery"
+              className="hello"
               style={{
-                paddingTop: "1rem",
-                justifyContent: "left",
-                display: "flex",
-                flexDirection: "column",
+                display: "grid",
+                gridTemplateColumns: "1fr 1fr",
+                gap: "2rem",
               }}
             >
-              <span style={{ padding: "2rem 0 2rem 0" }}>
-                <Bar options={options} data={interdata} />
-                {/* <span className="purple" style={{ fontSize: "1.1rem" }}>
-                  {" "}
-                  Username :{" "}
+              <div
+                className="gallery"
+                style={{
+                  paddingTop: "1rem",
+                  justifyContent: "left",
+                  display: "grid",
+
+                  gridTemplateColumns: "1fr",
+                }}
+              >
+                <span style={{ padding: "2rem 0 2rem 0" }}>
+                  <Bar options={options} data={interdata} />
                 </span>
-                <span
-                  style={{
-                    fontSize: "1.1rem",
-                    color: "white",
-                    fontWeight: "600",
-                    paddingLeft: "2rem",
-                  }}
-                >
-                  {data.u1}
+              </div>
+              <div
+                className="gallery"
+                style={{
+                  paddingTop: "1rem",
+                  justifyContent: "center",
+                  display: "grid",
+                  gridTemplateColumns: "1fr",
+                }}
+              >
+                <span style={{ padding: "1rem 1rem 1rem 1rem" }}>
+                  <Line options={options1} data={data1} />
                 </span>
-              </span>
-              <span style={{ padding: "2rem 0 2rem 0" }}>
-                <span className="purple" style={{ fontSize: "1.1rem" }}>
-                  {" "}
-                  Tier :Free{" "}
-                </span>
-                <span
-                  style={{
-                    fontSize: "1.1rem",
-                    color: "white",
-                    fontWeight: "600",
-                    paddingLeft: "2rem",
-                  }}
-                >
-                  {data.atLevel}
-                </span> */}
-              </span>
+              </div>
             </div>
           </div>
         </Row>
@@ -196,4 +216,4 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export default Dashboard;

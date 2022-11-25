@@ -71,7 +71,7 @@ function NavBar() {
             <Nav.Item>
               <Nav.Link
                 as={Link}
-                to="/play"
+                to="/#contact"
                 onClick={() => updateExpanded(false)}
               >
                 Contact
