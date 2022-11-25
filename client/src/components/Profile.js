@@ -4,57 +4,116 @@ import { decodeToken } from "react-jwt";
 import { useNavigate } from "react-router-dom";
 import { useCallback } from "react";
 import { Row, Container } from "react-bootstrap";
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+} from "chart.js";
+import { Bar } from "react-chartjs-2";
+import { faker } from "@faker-js/faker";
+
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend
+);
 
 const Profile = () => {
   const navigate = useNavigate();
-  const [data, setData] = React.useState({});
+  // const [data, setData] = React.useState({});
   const [loading, setLoading] = React.useState(false);
 
-  const populateProfile = useCallback(async () => {
-    const res = await axios.get("http://localhost:1339/api/user/getDetails", {
-      headers: {
-        "astellar-headers": localStorage.getItem("jwt"),
-      },
-    });
-    // console.log(res);
-    if (res.status > 400) {
-      return {
-        success: false,
-        data: null,
-      };
-    }
-    return {
-      success: true,
-      data: {
-        u1: res.data["u1"].toUpperCase(),
-        atLevel: res.data["atlevel"],
-        teamName: res.data["teamname"].toUpperCase(),
-      },
-    };
-  }, []);
+  // const populateProfile = useCallback(async () => {
+  //   const res = await axios.get("http://localhost:1339/api/user/getDetails", {
+  //     headers: {
+  //       "astellar-headers": localStorage.getItem("jwt"),
+  //     },
+  //   });
+  //   // console.log(res);
+  //   if (res.status > 400) {
+  //     return {
+  //       success: false,
+  //       data: null,
+  //     };
+  //   }
+  //   return {
+  //     success: true,
+  //     data: {
+  //       u1: res.data["u1"].toUpperCase(),
+  //       atLevel: res.data["atlevel"],
+  //       teamName: res.data["teamname"].toUpperCase(),
+  //     },
+  //   };
+  // }, []);
 
-  React.useEffect(() => {
-    async function getData() {
-      const token = localStorage.getItem("jwt");
-      // console.log(token);
-      if (token) {
-        const team = decodeToken(token);
-        if (!team) {
-          localStorage.removeItem("jwt");
-          navigate("/login");
-        } else {
-          const res = await populateProfile();
-          setData(res.data);
-        }
-      } else {
-        navigate("/login");
-      }
-      setLoading(false);
-    }
+  // React.useEffect(() => {
+  //   async function getData() {
+  //     const token = localStorage.getItem("jwt");
+  //     // console.log(token);
+  //     if (token) {
+  //       const team = decodeToken(token);
+  //       if (!team) {
+  //         localStorage.removeItem("jwt");
+  //         navigate("/login");
+  //       } else {
+  //         const res = await populateProfile();
+  //         setData(res.data);
+  //       }
+  //     } else {
+  //       navigate("/login");
+  //     }
+  //     setLoading(false);
+  //   }
 
-    setLoading(true);
-    getData();
-  }, [navigate, populateProfile]);
+  //   setLoading(true);
+  //   getData();
+  // }, [navigate, populateProfile]);
+  const data = { userName: "HELLO APPAREL" };
+
+  const options = {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: "top",
+      },
+      title: {
+        display: true,
+        text: "Chart.js Bar Chart",
+      },
+    },
+  };
+  const labels = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+  ];
+
+  const interdata = {
+    labels,
+    datasets: [
+      {
+        label: "Dataset 1",
+        data: labels.map(() => faker.datatype.number({ min: 0, max: 1000 })),
+        backgroundColor: "rgba(255, 99, 132, 0.5)",
+      },
+      {
+        label: "Dataset 2",
+        data: labels.map(() => faker.datatype.number({ min: 0, max: 1000 })),
+        backgroundColor: "rgba(53, 162, 235, 0.5)",
+      },
+    ],
+  };
 
   if (loading && !data) return <h2>loading</h2>;
   // return <h1>{JSON.stringify(data)}</h1>;
@@ -70,7 +129,7 @@ const Profile = () => {
             paddingBottom: "3rem",
           }}
         >
-          <span className="purple"> COMPANY {data.teamName} </span>
+          <span className="purple"> {data.userName} </span>
         </h1>
         <Row>
           <div>
@@ -97,7 +156,8 @@ const Profile = () => {
               }}
             >
               <span style={{ padding: "2rem 0 2rem 0" }}>
-                <span className="purple" style={{ fontSize: "1.1rem" }}>
+                <Bar options={options} data={interdata} />
+                {/* <span className="purple" style={{ fontSize: "1.1rem" }}>
                   {" "}
                   Username :{" "}
                 </span>
@@ -115,7 +175,7 @@ const Profile = () => {
               <span style={{ padding: "2rem 0 2rem 0" }}>
                 <span className="purple" style={{ fontSize: "1.1rem" }}>
                   {" "}
-                  Tier :{" "}
+                  Tier :Free{" "}
                 </span>
                 <span
                   style={{
@@ -126,7 +186,7 @@ const Profile = () => {
                   }}
                 >
                   {data.atLevel}
-                </span>
+                </span> */}
               </span>
             </div>
           </div>
